@@ -90,7 +90,3 @@ A solução IoTManagement é composta por múltiplos projetos que implementam um
 
 - **MockData**
   - Simula dispositivos e comandos para testes.
-
----
-
-Se precisar de mais detalhes ou ajustes, me avise!
