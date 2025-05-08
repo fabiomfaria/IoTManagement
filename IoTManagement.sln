@@ -17,6 +17,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.Domain", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.UI.Blazor", "src\IoTManagement.UI.Blazor\IoTManagement.UI.Blazor.csproj", "{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.API.Tests", "tests\IoTManagement.API.Tests\IoTManagement.API.Tests.csproj", "{49A1F889-04F5-4D78-83DD-45746D9485B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.Application.Tests", "tests\IoTManagement.Application.Tests\IoTManagement.Application.Tests.csproj", "{0DD5FC7F-EBEC-4726-A7E4-515C12FB3A28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.Domain.Tests", "tests\IoTManagement.Domain.Tests\IoTManagement.Domain.Tests.csproj", "{760ECCCB-365B-439E-BB3F-32521A446A2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.Infrastructure.Tests", "tests\IoTManagement.Infrastructure.Tests\IoTManagement.Infrastructure.Tests.csproj", "{7D42B748-E276-442D-BA93-183A7868C2FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.UI.Blazor.Tests", "tests\IoTManagement.UI.Blazor.Tests\IoTManagement.UI.Blazor.Tests.csproj", "{1817471A-7E40-4987-8AE1-DB078A9E03E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +61,26 @@ Global
 		{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49A1F889-04F5-4D78-83DD-45746D9485B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49A1F889-04F5-4D78-83DD-45746D9485B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49A1F889-04F5-4D78-83DD-45746D9485B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49A1F889-04F5-4D78-83DD-45746D9485B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DD5FC7F-EBEC-4726-A7E4-515C12FB3A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DD5FC7F-EBEC-4726-A7E4-515C12FB3A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DD5FC7F-EBEC-4726-A7E4-515C12FB3A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DD5FC7F-EBEC-4726-A7E4-515C12FB3A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{760ECCCB-365B-439E-BB3F-32521A446A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{760ECCCB-365B-439E-BB3F-32521A446A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{760ECCCB-365B-439E-BB3F-32521A446A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{760ECCCB-365B-439E-BB3F-32521A446A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D42B748-E276-442D-BA93-183A7868C2FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D42B748-E276-442D-BA93-183A7868C2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D42B748-E276-442D-BA93-183A7868C2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D42B748-E276-442D-BA93-183A7868C2FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1817471A-7E40-4987-8AE1-DB078A9E03E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1817471A-7E40-4987-8AE1-DB078A9E03E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1817471A-7E40-4987-8AE1-DB078A9E03E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1817471A-7E40-4987-8AE1-DB078A9E03E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
