@@ -1,0 +1,75 @@
+{
+  "Devices": [
+    {
+      "Identifier": "sensor-001",
+      "Description": "Temperature and Humidity sensor for living room.",
+      "Manufacturer": "HomeBrew Devices",
+      "Url": "telnet://192.168.1.101:23",
+      "Commands": [
+        {
+          "Operation": "getTemperature",
+          "Description": "Reads the current temperature.",
+          "Command": {
+            "Command": "TEMP_READ",
+            "Parameters": []
+          },
+          "Result": "Current temperature in Celsius.",
+          "Format": "{\"type\": \"object\", \"properties\": {\"temperature\": {\"type\": \"number\", \"format\": \"float\"}}}"
+        },
+        {
+          "Operation": "getHumidity",
+          "Description": "Reads the current humidity.",
+          "Command": {
+            "Command": "HUM_READ",
+            "Parameters": []
+          },
+          "Result": "Current relative humidity in %.",
+          "Format": "{\"type\": \"object\", \"properties\": {\"humidity\": {\"type\": \"number\", \"format\": \"float\"}}}"
+        }
+      ]
+    },
+    {
+      "Identifier": "actuator-light-002",
+      "Description": "Smart light switch for the office.",
+      "Manufacturer": "BrightFuture Inc.",
+      "Url": "telnet://192.168.1.102:23",
+      "Commands": [
+        {
+          "Operation": "turnOn",
+          "Description": "Turns the light on.",
+          "Command": {
+            "Command": "LIGHT_ON",
+            "Parameters": []
+          },
+          "Result": "Returns status 'ON'.",
+          "Format": "{\"type\": \"object\", \"properties\": {\"status\": {\"type\": \"string\", \"enum\": [\"ON\", \"OFF\"]}}}"
+        },
+        {
+          "Operation": "turnOff",
+          "Description": "Turns the light off.",
+          "Command": {
+            "Command": "LIGHT_OFF",
+            "Parameters": []
+          },
+          "Result": "Returns status 'OFF'.",
+          "Format": "{\"type\": \"object\", \"properties\": {\"status\": {\"type\": \"string\", \"enum\": [\"ON\", \"OFF\"]}}}"
+        },
+        {
+          "Operation": "setBrightness",
+          "Description": "Sets the light brightness.",
+          "Command": {
+            "Command": "LIGHT_BRIGHT",
+            "Parameters": [
+              {
+                "Name": "level",
+                "Description": "Brightness level from 0 to 100"
+              }
+            ]
+          },
+          "Result": "Returns current brightness level.",
+          "Format": "{\"type\": \"object\", \"properties\": {\"brightness\": {\"type\": \"integer\", \"minimum\": 0, \"maximum\": 100}}}"
+        }
+      ]
+    }
+  ]
+}

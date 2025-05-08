@@ -1,6 +1,84 @@
-@IoTManagement.MockAPI_HostAddress = http://localhost:5110
+@MockAPI_HostAddress = http://localhost:5280
+# @MockAPI_HostAddress = https://localhost:7280 # If using HTTPS
 
-GET {{IoTManagement.MockAPI_HostAddress}}/weatherforecast/
+### GET all device identifiers
+GET {{MockAPI_HostAddress}}/device
 Accept: application/json
 
-###
+### POST create a new device (auto-generated ID)
+POST {{MockAPI_HostAddress}}/device
+Content-Type: application/json
+
+{
+  "description": "Smart Coffee Maker",
+  "manufacturer": "BrewMaster",
+  "url": "telnet://192.168.1.105:23",
+  "commands": [
+    {
+      "operation": "brewCoffee",
+      "description": "Starts brewing coffee.",
+      "command": {
+        "command": "BREW_START",
+        "parameters": [
+          {
+            "name": "strength",
+            "description": "Coffee strength: MILD, MEDIUM, STRONG"
+          }
+        ]
+      },
+      "result": "Status of the brewing process.",
+      "format": "{\"type\": \"object\", \"properties\": {\"status\": {\"type\": \"string\"}, \"strength\": {\"type\": \"string\"}}}"
+    }
+  ]
+}
+
+### POST create a new device (with specified ID)
+POST {{MockAPI_HostAddress}}/device
+Content-Type: application/json
+
+{
+  "identifier": "coffee-maker-001",
+  "description": "Smart Coffee Maker Deluxe",
+  "manufacturer": "BrewMaster Pro",
+  "url": "telnet://192.168.1.106:23",
+  "commands": []
+}
+
+
+### GET device by ID (use an ID from GET all or POST response)
+# Replace 'sensor-001' with an actual ID from your mock data
+GET {{MockAPI_HostAddress}}/device/sensor-001
+Accept: application/json
+
+### GET device by ID (non-existent)
+GET {{MockAPI_HostAddress}}/device/non-existent-id
+Accept: application/json
+
+### PUT update a device
+# Replace 'sensor-001' with an actual ID from your mock data
+PUT {{MockAPI_HostAddress}}/device/sensor-001
+Content-Type: application/json
+
+{
+  "identifier": "sensor-001",
+  "description": "UPDATED Temperature and Humidity sensor for living room and kitchen.",
+  "manufacturer": "HomeBrew Devices Ltd.",
+  "url": "telnet://192.168.1.111:23",
+  "commands": [
+    {
+      "operation": "getTemperature",
+      "description": "Reads the current ambient temperature.",
+      "command": {
+        "command": "TEMP_READ_AMBIENT",
+        "parameters": []
+      },
+      "result": "Current temperature in Celsius.",
+      "format": "{\"type\": \"object\", \"properties\": {\"temperature\": {\"type\": \"number\", \"format\": \"float\"}}}"
+    }
+  ]
+}
+
+### DELETE a device
+# Replace 'actuator-light-002' or another ID with one you want to delete
+DELETE {{MockAPI_HostAddress}}/device/actuator-light-002
+Accept: application/json
