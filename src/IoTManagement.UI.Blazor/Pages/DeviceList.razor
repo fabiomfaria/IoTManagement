@@ -1,0 +1,77 @@
+@page "/devices"
+@using IoTManagement.UI.Blazor.Models
+@using IoTManagement.UI.Blazor.Services
+@inject DeviceService DeviceService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<h3>IoT Devices</h3>
+
+@if (loading)
+{
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else if (error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @error
+    </div>
+}
+else if (devices == null || !devices.Any())
+{
+    <p>No devices found.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Manufacturer</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var device in devices)
+                {
+                    <tr>
+                        <td>@device.Manufacturer</td>
+                        <td>@device.Description</td>
+                        <td>
+                            <button class="btn btn-primary" @onclick="() => ViewDevice(device.Id)">View Details</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<DeviceListItem> devices;
+    private bool loading = true;
+    private string error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            loading = true;
+            devices = await DeviceService.GetAllDevicesAsync();
+            loading = false;
+        }
+        catch (Exception ex)
+        {
+            loading = false;
+            error = $"Error loading devices: {ex.Message}";
+        }
+    }
+
+    private void ViewDevice(string deviceId)
+    {
+        NavigationManager.NavigateTo($"/devices/{deviceId}");
+    }
+}

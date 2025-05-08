@@ -1,0 +1,91 @@
+@page "/login"
+@inject AuthenticationService AuthService
+@inject NavigationManager NavigationManager
+@using IoTManagement.UI.Blazor.Models
+@using IoTManagement.UI.Blazor.Services
+
+<h3>Login</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <InputText id="username" @bind-Value="loginModel.Username" class="form-control" />
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label for="password">Password</label>
+                        <InputText id="password" @bind-Value="loginModel.Password" type="password" class="form-control" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3" disabled="@isLoggingIn">
+                        @if (isLoggingIn)
+                        {
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span> Loading...</span>
+                        }
+                        else
+                        {
+                            <span>Login</span>
+                        }
+                    </button>
+                </EditForm>
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger mt-3" role="alert">
+                        @errorMessage
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+    private bool isLoggingIn = false;
+    private string errorMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // If the user is already logged in, redirect to the index
+        if (await AuthService.IsUserAuthenticated())
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+
+    private async Task HandleLogin()
+    {
+        isLoggingIn = true;
+        errorMessage = string.Empty;
+
+        try
+        {
+            var result = await AuthService.Login(loginModel);
+            if (result)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "Login failed. Please check your username and password.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Login error: {ex.Message}";
+        }
+        finally
+        {
+            isLoggingIn = false;
+        }
+    }
+}

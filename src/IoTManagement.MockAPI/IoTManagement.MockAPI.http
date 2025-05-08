@@ -1,0 +1,6 @@
+@IoTManagement.MockAPI_HostAddress = http://localhost:5110
+
+GET {{IoTManagement.MockAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

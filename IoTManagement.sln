@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement", "IoTManagement.csproj", "{52282913-2B85-46AC-B2D0-6B0286C195AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.Application", "src\IoTManagement.Application\IoTManagement.Application.csproj", "{1D2DCAFD-CB96-4AD9-BEAC-21E1BCC07787}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.Infrastructure", "src\IoTManagement.Infrastructure\IoTManagement.Infrastructure.csproj", "{BB3AD207-4514-4B49-ADE1-9DF0AC6B2530}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.API", "src\IoTManagement.API\IoTManagement.API.csproj", "{1C1FF043-C0FF-4B4E-8F47-D635D62C401F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.MockAPI", "src\IoTManagement.MockAPI\IoTManagement.MockAPI.csproj", "{25E3D83F-A759-4FEC-B788-BC30EDA8B586}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.Domain", "src\IoTManagement.Domain\IoTManagement.Domain.csproj", "{4E7E7653-9804-4650-957F-D10BAA4A229B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTManagement.UI.Blazor", "src\IoTManagement.UI.Blazor\IoTManagement.UI.Blazor.csproj", "{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52282913-2B85-46AC-B2D0-6B0286C195AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52282913-2B85-46AC-B2D0-6B0286C195AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52282913-2B85-46AC-B2D0-6B0286C195AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52282913-2B85-46AC-B2D0-6B0286C195AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D2DCAFD-CB96-4AD9-BEAC-21E1BCC07787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D2DCAFD-CB96-4AD9-BEAC-21E1BCC07787}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D2DCAFD-CB96-4AD9-BEAC-21E1BCC07787}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D2DCAFD-CB96-4AD9-BEAC-21E1BCC07787}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB3AD207-4514-4B49-ADE1-9DF0AC6B2530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB3AD207-4514-4B49-ADE1-9DF0AC6B2530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB3AD207-4514-4B49-ADE1-9DF0AC6B2530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB3AD207-4514-4B49-ADE1-9DF0AC6B2530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C1FF043-C0FF-4B4E-8F47-D635D62C401F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C1FF043-C0FF-4B4E-8F47-D635D62C401F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C1FF043-C0FF-4B4E-8F47-D635D62C401F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C1FF043-C0FF-4B4E-8F47-D635D62C401F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25E3D83F-A759-4FEC-B788-BC30EDA8B586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25E3D83F-A759-4FEC-B788-BC30EDA8B586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25E3D83F-A759-4FEC-B788-BC30EDA8B586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25E3D83F-A759-4FEC-B788-BC30EDA8B586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E7E7653-9804-4650-957F-D10BAA4A229B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E7E7653-9804-4650-957F-D10BAA4A229B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E7E7653-9804-4650-957F-D10BAA4A229B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E7E7653-9804-4650-957F-D10BAA4A229B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DC8CB61-36A9-47EE-9F89-C4F4AD3AA829}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0BB075CB-CD77-43E8-B504-D437DC63AB83}
+	EndGlobalSection
+EndGlobal

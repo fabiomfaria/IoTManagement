@@ -1,0 +1,109 @@
+@page "/devices/{DeviceId}"
+@using IoTManagement.UI.Blazor.Models
+@using IoTManagement.UI.Blazor.Services
+@inject DeviceService DeviceService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<h3>Device Details</h3>
+
+@if (loading)
+{
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else if (error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @error
+    </div>
+}
+else if (device == null)
+{
+    <p>Device not found.</p>
+}
+else
+{
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>@device.Manufacturer</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Details</h5>
+            <p class="card-text"><strong>ID:</strong> @device.Id</p>
+            <p class="card-text"><strong>Description:</strong> @device.Description</p>
+        </div>
+    </div>
+
+    <h4>Available Commands</h4>
+    
+    @if (device.Commands == null || !device.Commands.Any())
+    {
+        <p>No commands available for this device.</p>
+    }
+    else
+    {
+        <div class="list-group mb-4">
+            @foreach (var command in device.Commands)
+            {
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@command.Name</h5>
+                    </div>
+                    <p class="mb-1">@command.Description</p>
+                    <small>Result: @command.ResultDescription</small>
+                    <div class="mt-2">
+                        <button class="btn btn-primary" @onclick="() => ExecuteCommand(command.Id)">Execute Command</button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <button class="btn btn-secondary" @onclick="NavigateBack">Back to Device List</button>
+}
+
+@code {
+    [Parameter]
+    public string DeviceId { get; set; }
+
+    private DeviceDetail device;
+    private bool loading = true;
+    private string error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDeviceData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadDeviceData();
+    }
+
+    private async Task LoadDeviceData()
+    {
+        try
+        {
+            loading = true;
+            device = await DeviceService.GetDeviceByIdAsync(DeviceId);
+            loading = false;
+        }
+        catch (Exception ex)
+        {
+            loading = false;
+            error = $"Error loading device details: {ex.Message}";
+        }
+    }
+
+    private void ExecuteCommand(string commandId)
+    {
+        NavigationManager.NavigateTo($"/devices/{DeviceId}/commands/{commandId}");
+    }
+
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo("/devices");
+    }
+}

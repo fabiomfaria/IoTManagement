@@ -1,0 +1,184 @@
+@page "/devices/{DeviceId}/commands/{CommandId}"
+@using IoTManagement.UI.Blazor.Models
+@using IoTManagement.UI.Blazor.Services
+@inject DeviceService DeviceService
+@inject CommandExecutionService CommandService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<h3>Execute Command</h3>
+
+@if (loading)
+{
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else if (error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @error
+    </div>
+}
+else if (device == null || command == null)
+{
+    <p>Device or command not found.</p>
+}
+else
+{
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>@command.Name</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Command Details</h5>
+            <p class="card-text"><strong>Description:</strong> @command.Description</p>
+            <p class="card-text"><strong>Result Description:</strong> @command.ResultDescription</p>
+            <p class="card-text"><strong>Format:</strong> @command.Format?.Description</p>
+        </div>
+    </div>
+
+    <h4>Parameters</h4>
+    <EditForm Model="@parameterValues" OnValidSubmit="@ExecuteCommand">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        @if (command.CommandDetails.Parameters == null || !command.CommandDetails.Parameters.Any())
+        {
+            <p>This command does not require any parameters.</p>
+        }
+        else
+        {
+            <div class="mb-4">
+                @foreach (var parameter in command.CommandDetails.Parameters)
+                {
+                    <div class="mb-3">
+                        <label class="form-label">
+                            @parameter.Name
+                            @if (parameter.Required)
+                            {
+                                <span class="text-danger">*</span>
+                            }
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" 
+                                   placeholder="@parameter.Description"
+                                   @bind="parameterValues[parameter.Name]" />
+                            <span class="input-group-text">@parameter.Type</span>
+                        </div>
+                        <small class="form-text text-muted">@parameter.Description</small>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primary" disabled="@executing">
+                @if (executing)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span> Executing...</span>
+                }
+                else
+                {
+                    <span>Execute Command</span>
+                }
+            </button>
+            <button type="button" class="btn btn-secondary" @onclick="NavigateBack">Back to Device</button>
+        </div>
+    </EditForm>
+
+    @if (result != null)
+    {
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Command Result</h5>
+            </div>
+            <div class="card-body">
+                <pre class="bg-light p-3 rounded">@result.FormattedResult</pre>
+                @if (!string.IsNullOrEmpty(result.FormatDescription))
+                {
+                    <p class="mt-2 text-muted">@result.FormatDescription</p>
+                }
+            </div>
+        </div>
+    }
+}
+
+@code {
+    [Parameter]
+    public string DeviceId { get; set; }
+
+    [Parameter]
+    public string CommandId { get; set; }
+
+    private DeviceDetail device;
+    private Command command;
+    private Dictionary<string, string> parameterValues = new Dictionary<string, string>();
+    private CommandExecutionResult result;
+    private bool loading = true;
+    private bool executing = false;
+    private string error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            loading = true;
+            device = await DeviceService.GetDeviceByIdAsync(DeviceId);
+            
+            if (device != null)
+            {
+                command = device.Commands.FirstOrDefault(c => c.Id == CommandId);
+                
+                if (command?.CommandDetails?.Parameters != null)
+                {
+                    foreach (var param in command.CommandDetails.Parameters)
+                    {
+                        if (!parameterValues.ContainsKey(param.Name))
+                        {
+                            parameterValues[param.Name] = string.Empty;
+                        }
+                    }
+                }
+            }
+            
+            loading = false;
+        }
+        catch (Exception ex)
+        {
+            loading = false;
+            error = $"Error loading command details: {ex.Message}";
+        }
+    }
+
+    private async Task ExecuteCommand()
+    {
+        try
+        {
+            executing = true;
+            result = await CommandService.ExecuteCommandAsync(DeviceId, CommandId, parameterValues);
+            executing = false;
+        }
+        catch (Exception ex)
+        {
+            executing = false;
+            error = $"Error executing command: {ex.Message}";
+        }
+    }
+
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo($"/devices/{DeviceId}");
+    }
+}
