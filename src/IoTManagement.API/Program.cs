@@ -1,3 +1,6 @@
+using IoTManagement.API.Documentation;
+using IoTManagement.API.Extensions;
+using IoTManagement.API.Interfaces;
 using IoTManagement.API.Middlewares;
 using IoTManagement.Application;
 using IoTManagement.Domain.Interfaces;
@@ -15,6 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddControllers();
+builder.Services.AddApiServices(builder.Configuration);
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.ConfigureSwagger();
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -102,8 +108,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 // Register application services
-builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(builder.Configuration);
+//builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // Register HTTP client for CIoTD API
 builder.Services.AddHttpClient<ICIoTDApiService, CIoTDApiService>(client =>
@@ -130,6 +135,7 @@ app.UseHttpsRedirection();
 
 // Use custom exception middleware
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseExceptionHandling(app.Environment);
 
 app.UseCors("AllowBlazorApp");
 
