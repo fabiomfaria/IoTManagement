@@ -66,7 +66,7 @@ namespace IoTManagement.Application.Services
 
         public async Task RevokeTokenAsync(OAuth2RevokeTokenRequestDto request)
         {
-            await _tokenService.RevokeRefreshTokenAsync(request.Token);
+            await _tokenService.RevokeTokenAsync(request);
         }
 
         public async Task<UserInfoDto> GetUserInfoAsync(string accessToken)
@@ -87,5 +87,55 @@ namespace IoTManagement.Application.Services
                 Roles = user.Roles
             };
         }
+
+        // Fix for CS0535: Implementing IAuthService.GetTokenAsync
+        public async Task<OAuth2TokenResponseDto?> GetTokenAsync(OAuth2TokenRequestDto request)
+        {
+            return await AuthenticateAsync(request);
+        }
+
+        // Fix for CS0535: Implementing IAuthService.RevokeTokenAsync with additional username parameter
+        public async Task<bool> RevokeTokenAsync(OAuth2RevokeTokenRequestDto request, string? username)
+        {
+            await _tokenService.RevokeRefreshTokenAsync(request.Token);
+            return true; // Assuming successful revocation
+        }
+
+        // Fix for CS0535: Implementing IAuthService.GetUserInfo with username parameter
+        public UserInfoDto? GetUserInfo(string? username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                throw new ValidationException("Username cannot be null or empty.");
+            }
+
+            User user = _userStore.GetAllUsers().FirstOrDefault(u => u.Username == username);
+
+            if (user == null)
+            {
+                throw new UnauthorizedException("User not found.");
+            }
+
+            return new UserInfoDto
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                Name = user.Name,
+                Roles = user.Roles
+            };
+        }
+    }
+    public interface ITokenService
+    {
+        Task<OAuth2TokenResponseDto> ProcessTokenRequestAsync(OAuth2TokenRequestDto request);
+        string ValidateToken(string token);
+        Task<OAuth2TokenResponseDto> RefreshTokenAsync(OAuth2RefreshTokenRequestDto request);
+        Task<bool> RevokeTokenAsync(OAuth2RevokeTokenRequestDto request); // Added this method
+        Task<string> GenerateAccessTokenAsync(User user);
+        Task<string> GenerateRefreshTokenAsync(User user);
+        Task<User> ValidateRefreshTokenAsync(string refreshToken);
+        Task<User> ValidateAccessTokenAsync(string accessToken);
+        Task RevokeRefreshTokenAsync(string token);
     }
 }

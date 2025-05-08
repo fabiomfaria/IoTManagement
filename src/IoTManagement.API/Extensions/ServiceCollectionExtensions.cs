@@ -169,7 +169,7 @@ namespace IoTManagement.API.Extensions
             services.AddScoped<ICommandService, CommandService>();
             
             // Registra serviços da camada de domínio
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<Domain.Interfaces.ITokenService, TokenService>();
             services.AddScoped<IUserStore, UserStore>();
             services.AddScoped<ITelnetClient, TelnetClient>();
             services.AddScoped<IDeviceCommandExecutionService, DeviceCommandExecutionService>();
